@@ -1,0 +1,23 @@
+import { drizzle } from 'drizzle-orm/postgres-js';
+import postgres from 'postgres';
+import * as schema from '@/db/schema';
+
+const connectionString = process.env.DATABASE_URL || '';
+
+const client = postgres(connectionString, {
+  max: 1,
+  idle_timeout: 20,
+  connect_timeout: 10,
+});
+
+export const db = drizzle(client, { schema });
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export const mockDb = {
+  users: [] as any[],
+  recipients: [] as any[],
+  videos: [] as any[],
+  videoRecipients: [] as any[],
+  billingRecords: [] as any[],
+  settings: [] as any[],
+};
